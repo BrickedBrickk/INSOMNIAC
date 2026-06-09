@@ -118,6 +118,11 @@ func build_save_data(root_or_game_node) -> Dictionary:
 			"reputation": _clamp_saved_int(player_stats.call("get_reputation"), 0, MAX_REPUTATION),
 			"heat": _clamp_saved_int(player_stats.call("get_heat"), 0, MAX_HEAT),
 		}
+	var heat_event_manager := _find_heat_event_manager(root)
+	if heat_event_manager != null:
+		data["heat_events"] = {
+			"triggered_thresholds": heat_event_manager.call("get_triggered_thresholds_for_save"),
+		}
 
 	var stash_data: Array[Dictionary] = []
 	for stash_box: Node in _find_nodes(root, "stash_boxes", ["get_contents_for_save", "load_contents_from_save"]):
@@ -197,6 +202,7 @@ func apply_save_data(root_or_game_node, data: Dictionary) -> bool:
 
 	wallet.call("set_money", maxi(int(money), 0))
 	var applied_cleanly := bool(inventory.call("set_items_from_save", inventory_data))
+	applied_cleanly = _apply_heat_event_data(root, data) and applied_cleanly
 	applied_cleanly = _apply_player_stats_data(root, player, data) and applied_cleanly
 	applied_cleanly = _apply_stash_data(root, data) and applied_cleanly
 	applied_cleanly = _apply_encoder_data(root, data) and applied_cleanly
@@ -204,6 +210,25 @@ func apply_save_data(root_or_game_node, data: Dictionary) -> bool:
 	applied_cleanly = _apply_customer_order_data(root, data) and applied_cleanly
 	applied_cleanly = _apply_player_position(player, data) and applied_cleanly
 	return applied_cleanly
+
+
+func _apply_heat_event_data(root: Node, data: Dictionary) -> bool:
+	var heat_event_manager := _find_heat_event_manager(root)
+	if heat_event_manager == null or not data.has("heat_events"):
+		return true
+
+	var heat_event_data: Variant = data.get("heat_events", {})
+	if typeof(heat_event_data) != TYPE_DICTIONARY:
+		push_warning("SaveManager: heat_events must be an object.")
+		return false
+
+	var triggered_thresholds: Variant = heat_event_data.get("triggered_thresholds", [])
+	if typeof(triggered_thresholds) != TYPE_ARRAY:
+		push_warning("SaveManager: heat_events.triggered_thresholds must be an array.")
+		return false
+
+	heat_event_manager.call("load_triggered_thresholds_from_save", triggered_thresholds)
+	return true
 
 
 func _apply_player_stats_data(root: Node, player: Node, data: Dictionary) -> bool:
@@ -405,6 +430,15 @@ func _find_player_stats(root: Node, player: Node) -> Node:
 		["get_reputation", "set_reputation", "get_heat", "set_heat"]
 	)
 	return player_stats_nodes[0] if not player_stats_nodes.is_empty() else null
+
+
+func _find_heat_event_manager(root: Node) -> Node:
+	var managers := _find_nodes(
+		root,
+		"",
+		["get_triggered_thresholds_for_save", "load_triggered_thresholds_from_save"]
+	)
+	return managers[0] if not managers.is_empty() else null
 
 
 func _find_nodes(root: Node, group_name: StringName, required_methods: Array) -> Array[Node]:

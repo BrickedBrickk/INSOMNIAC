@@ -4,6 +4,7 @@ extends Node
 @onready var player: PlayerDesktopRig = $Apartment/PlayerDesktopRig
 @onready var apartment: Node = $Apartment
 @onready var hud: HUD = $HUD
+@onready var heat_event_manager: Node = $HeatEventManager
 
 
 func _ready() -> void:
@@ -11,10 +12,13 @@ func _ready() -> void:
 	var wallet := player.get_wallet()
 	var interaction_controller := player.get_interaction_controller()
 	var look_controller := player.get_look_controller()
+	var player_stats := _find_player_stats()
 
 	hud.set_inventory(inventory)
 	hud.set_wallet(wallet)
-	hud.set_player_stats(_find_player_stats())
+	hud.set_player_stats(player_stats)
+	heat_event_manager.connect("heat_event_triggered", _on_heat_event_triggered)
+	heat_event_manager.call("connect_to_player_stats", player_stats)
 	interaction_controller.prompt_changed.connect(hud.set_interaction_prompt)
 	interaction_controller.panel_data_changed.connect(hud.set_machine_panel_data)
 	_connect_status_sources(apartment)
@@ -30,6 +34,10 @@ func _on_mouse_capture_changed(is_captured: bool) -> void:
 		hud.set_status("Mouse captured. Escape releases it.")
 	else:
 		hud.set_status("Mouse released. Click the game to capture it.")
+
+
+func _on_heat_event_triggered(_event_name: String, message: String, _heat: int) -> void:
+	hud.call_deferred("set_status", message)
 
 
 func _connect_status_sources(node: Node) -> void:

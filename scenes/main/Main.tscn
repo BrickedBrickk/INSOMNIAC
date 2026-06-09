@@ -1,11 +1,15 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game.gd" id="1_game"]
 [ext_resource type="PackedScene" path="res://scenes/apartment/Apartment.tscn" id="2_apartment"]
 [ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="3_hud"]
+[ext_resource type="Script" path="res://scripts/heat/heat_event_manager.gd" id="4_heat_event_manager"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_game")
+
+[node name="HeatEventManager" type="Node" parent="."]
+script = ExtResource("4_heat_event_manager")
 
 [node name="Apartment" parent="." instance=ExtResource("2_apartment")]
 
