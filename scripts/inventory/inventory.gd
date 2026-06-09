@@ -88,6 +88,38 @@ func get_all_items() -> Dictionary:
 	return items
 
 
+func clear() -> void:
+	_stacks.clear()
+	inventory_changed.emit()
+	print("Inventory: cleared")
+
+
+func set_items_from_save(data: Dictionary) -> bool:
+	var display_names: Dictionary = {}
+	for item_id: String in _stacks:
+		var stack: ItemStack = _stacks[item_id]
+		display_names[item_id] = stack.display_name
+
+	var loaded_stacks: Dictionary = {}
+	for raw_item_id: Variant in data:
+		var item_id := str(raw_item_id)
+		var raw_amount: Variant = data[raw_item_id]
+		if item_id.is_empty() or not _is_number(raw_amount):
+			return false
+
+		var amount := int(raw_amount)
+		if amount <= 0:
+			return false
+
+		var display_name := str(display_names.get(item_id, item_id.capitalize()))
+		loaded_stacks[item_id] = ItemStack.new(item_id, display_name, amount)
+
+	_stacks = loaded_stacks
+	inventory_changed.emit()
+	print("Inventory: loaded items %s" % [get_all_items()])
+	return true
+
+
 func get_debug_text() -> String:
 	if _stacks.is_empty():
 		return "Inventory:\n(empty)"
@@ -108,3 +140,7 @@ func _get_requirements(items: Array[ItemAmountData]) -> Dictionary:
 			return {}
 		requirements[item.item_id] = requirements.get(item.item_id, 0) + item.amount
 	return requirements
+
+
+func _is_number(value: Variant) -> bool:
+	return typeof(value) == TYPE_INT or typeof(value) == TYPE_FLOAT

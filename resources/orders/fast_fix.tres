@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CustomerOrderData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/orders/customer_order_data.gd" id="1_order"]
+
+[resource]
+script = ExtResource("1_order")
+id = "fast_fix"
+customer_name = "Vex"
+order_title = "Fast Fix"
+requested_item_id = "fast_life"
+requested_item_display_name = "Fast Life"
+requested_amount = 1
+payout = 90
+reputation_gain = 3
+heat_gain = 4
+flavor_text = "Need something fast. Don't ask why."

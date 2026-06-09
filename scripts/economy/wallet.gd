@@ -19,6 +19,12 @@ func get_money() -> int:
 	return _money
 
 
+func set_money(amount: int) -> void:
+	_money = maxi(amount, 0)
+	money_changed.emit(_money)
+	print("Wallet: $%d" % _money)
+
+
 func can_afford(amount: int) -> bool:
 	return amount >= 0 and _money >= amount
 

@@ -11,6 +11,10 @@ extends CharacterBody3D
 @onready var interaction_controller: InteractionController = $CameraPivot/Camera3D/RayCast3D
 
 
+func _ready() -> void:
+	add_to_group("player")
+
+
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta

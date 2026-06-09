@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CustomerOrderData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/orders/customer_order_data.gd" id="1_order"]
+
+[resource]
+script = ExtResource("1_order")
+id = "penthouse_trial"
+customer_name = "June"
+order_title = "Penthouse Trial"
+requested_item_id = "penthouse"
+requested_item_display_name = "Penthouse"
+requested_amount = 1
+payout = 130
+reputation_gain = 5
+heat_gain = 3
+flavor_text = "Client wants the rich-life cut. Clean batch only."

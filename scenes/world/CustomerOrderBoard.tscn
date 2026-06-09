@@ -1,0 +1,84 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/customer_order_board.gd" id="1_board"]
+[ext_resource type="Script" path="res://scripts/orders/customer_order_data.gd" id="2_order_type"]
+[ext_resource type="Resource" path="res://resources/orders/quiet_night.tres" id="3_quiet"]
+[ext_resource type="Resource" path="res://resources/orders/fast_fix.tres" id="4_fast"]
+[ext_resource type="Resource" path="res://resources/orders/penthouse_trial.tres" id="5_penthouse"]
+
+[sub_resource type="StandardMaterial3D" id="Material_frame"]
+albedo_color = Color(0.075, 0.055, 0.09, 1)
+metallic = 0.15
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="BoxMesh_frame"]
+material = SubResource("Material_frame")
+size = Vector3(1.7, 1.35, 0.22)
+
+[sub_resource type="BoxShape3D" id="BoxShape_board"]
+size = Vector3(1.7, 1.35, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="Material_paper"]
+albedo_color = Color(0.82, 0.77, 0.64, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_paper"]
+material = SubResource("Material_paper")
+size = Vector3(1.38, 0.92, 0.035)
+
+[sub_resource type="StandardMaterial3D" id="Material_header"]
+albedo_color = Color(0.82, 0.22, 0.42, 1)
+emission_enabled = true
+emission = Color(0.42, 0.04, 0.14, 1)
+emission_energy_multiplier = 1.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_header"]
+material = SubResource("Material_header")
+size = Vector3(1.18, 0.16, 0.04)
+
+[sub_resource type="StandardMaterial3D" id="Material_post"]
+albedo_color = Color(0.045, 0.035, 0.055, 1)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_post"]
+material = SubResource("Material_post")
+size = Vector3(0.24, 1.25, 0.24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_base"]
+material = SubResource("Material_post")
+size = Vector3(1.35, 0.16, 0.78)
+
+[node name="CustomerOrderBoard" type="StaticBody3D"]
+script = ExtResource("1_board")
+orders = Array[ExtResource("2_order_type")]([ExtResource("3_quiet"), ExtResource("4_fast"), ExtResource("5_penthouse")])
+
+[node name="BoardFrame" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.55, 0)
+mesh = SubResource("BoxMesh_frame")
+
+[node name="PaperBoard" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.5, 0.13)
+mesh = SubResource("BoxMesh_paper")
+
+[node name="HeaderStrip" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.86, 0.16)
+mesh = SubResource("BoxMesh_header")
+
+[node name="Post" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.72, 0)
+mesh = SubResource("BoxMesh_post")
+
+[node name="Base" type="MeshInstance3D" parent="."]
+position = Vector3(0, -1.38, 0)
+mesh = SubResource("BoxMesh_base")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.55, 0)
+shape = SubResource("BoxShape_board")
+
+[node name="OrdersLabel" type="Label3D" parent="."]
+position = Vector3(0, 0.86, 0.19)
+text = "ORDERS"
+font_size = 46
+outline_size = 8
+no_depth_test = true

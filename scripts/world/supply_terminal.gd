@@ -7,6 +7,10 @@ signal status_changed(message: String)
 @export var selected_offer_index: int = 0
 
 
+func _ready() -> void:
+	add_to_group("supply_terminals")
+
+
 func interact(player: Node) -> void:
 	var offer := get_selected_offer()
 	if offer == null or not _is_valid_offer(offer):
@@ -45,6 +49,20 @@ func get_selected_offer() -> SupplyOfferData:
 		return null
 	selected_offer_index = wrapi(selected_offer_index, 0, offers.size())
 	return offers[selected_offer_index]
+
+
+func get_selected_offer_index() -> int:
+	if offers.is_empty():
+		return 0
+	selected_offer_index = clampi(selected_offer_index, 0, offers.size() - 1)
+	return selected_offer_index
+
+
+func set_selected_offer_index(index: int) -> void:
+	if offers.is_empty():
+		selected_offer_index = 0
+		return
+	selected_offer_index = clampi(index, 0, offers.size() - 1)
 
 
 func get_interaction_prompt() -> String:

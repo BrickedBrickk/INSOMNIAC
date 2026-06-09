@@ -14,6 +14,10 @@ var _pending_recipe: EncoderRecipeData
 var _encode_started_msec: int = 0
 
 
+func _ready() -> void:
+	add_to_group("dream_encoders")
+
+
 func interact(player: Node) -> void:
 	if _is_encoding:
 		_notify("Encoder already running")
@@ -60,6 +64,20 @@ func get_selected_recipe() -> EncoderRecipeData:
 		return null
 	selected_recipe_index = wrapi(selected_recipe_index, 0, recipes.size())
 	return recipes[selected_recipe_index]
+
+
+func get_selected_recipe_index() -> int:
+	if recipes.is_empty():
+		return 0
+	selected_recipe_index = clampi(selected_recipe_index, 0, recipes.size() - 1)
+	return selected_recipe_index
+
+
+func set_selected_recipe_index(index: int) -> void:
+	if recipes.is_empty():
+		selected_recipe_index = 0
+		return
+	selected_recipe_index = clampi(index, 0, recipes.size() - 1)
 
 
 func get_interaction_prompt() -> String:

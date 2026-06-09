@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CustomerOrderData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/orders/customer_order_data.gd" id="1_order"]
+
+[resource]
+script = ExtResource("1_order")
+id = "quiet_night"
+customer_name = "Milo"
+order_title = "Quiet Night"
+requested_item_id = "beach_loop"
+requested_item_display_name = "Beach Loop"
+requested_amount = 1
+payout = 40
+reputation_gain = 2
+heat_gain = 1
+flavor_text = "Need something calm. Nothing weird."

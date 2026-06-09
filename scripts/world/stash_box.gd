@@ -17,6 +17,10 @@ const LUCID_DISPLAY_NAMES: Dictionary = {
 var _contents: Dictionary = {}
 
 
+func _ready() -> void:
+	add_to_group("stash_boxes")
+
+
 func interact(player: Node) -> void:
 	if not player.has_method("get_inventory"):
 		push_warning("StashBox requires a player with inventory access.")
@@ -48,6 +52,28 @@ func get_interaction_prompt() -> String:
 
 func get_contents() -> Dictionary:
 	return _contents.duplicate()
+
+
+func get_contents_for_save() -> Dictionary:
+	return _contents.duplicate()
+
+
+func load_contents_from_save(data: Dictionary) -> bool:
+	var loaded_contents: Dictionary = {}
+	for raw_item_id: Variant in data:
+		var item_id := str(raw_item_id)
+		var raw_amount: Variant = data[raw_item_id]
+		if not LUCID_ITEM_IDS.has(item_id) or not _is_number(raw_amount):
+			return false
+
+		var amount := int(raw_amount)
+		if amount <= 0:
+			return false
+		loaded_contents[item_id] = amount
+
+	_contents = loaded_contents
+	print("StashBox: loaded contents %s" % [_contents])
+	return true
 
 
 func get_interaction_panel_data(player: Node) -> Dictionary:
@@ -87,3 +113,7 @@ func get_interaction_panel_data(player: Node) -> Dictionary:
 func _notify(message: String) -> void:
 	print("StashBox: %s" % message)
 	status_changed.emit(message)
+
+
+func _is_number(value: Variant) -> bool:
+	return typeof(value) == TYPE_INT or typeof(value) == TYPE_FLOAT
