@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/stash_box.gd" id="1_stash"]
+
+[sub_resource type="StandardMaterial3D" id="Material_crate"]
+albedo_color = Color(0.24, 0.18, 0.12, 1)
+metallic = 0.1
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_crate"]
+material = SubResource("Material_crate")
+size = Vector3(1.25, 1.15, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape_crate"]
+size = Vector3(1.25, 1.15, 1)
+
+[sub_resource type="StandardMaterial3D" id="Material_band"]
+albedo_color = Color(0.4, 0.42, 0.46, 1)
+metallic = 0.65
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_band"]
+material = SubResource("Material_band")
+size = Vector3(1.32, 0.14, 1.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lock"]
+material = SubResource("Material_band")
+size = Vector3(0.25, 0.3, 0.08)
+
+[node name="StashBox" type="StaticBody3D"]
+script = ExtResource("1_stash")
+
+[node name="Crate" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_crate")
+
+[node name="TopBand" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.35, 0)
+mesh = SubResource("BoxMesh_band")
+
+[node name="BottomBand" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.35, 0)
+mesh = SubResource("BoxMesh_band")
+
+[node name="Lock" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.05, 0.54)
+mesh = SubResource("BoxMesh_lock")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_crate")
+
+[node name="Label3D" type="Label3D" parent="."]
+position = Vector3(0, 0.95, 0)
+text = "Stash"
+font_size = 40
+outline_size = 8
+billboard = 1
+no_depth_test = true

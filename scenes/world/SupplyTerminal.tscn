@@ -1,0 +1,67 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/supply_terminal.gd" id="1_terminal"]
+[ext_resource type="Script" path="res://scripts/economy/supply_offer_data.gd" id="2_offer_type"]
+[ext_resource type="Resource" path="res://resources/supply_offers/blank_cartridge_pack.tres" id="3_blank"]
+[ext_resource type="Resource" path="res://resources/supply_offers/beach_starter_pack.tres" id="4_beach"]
+[ext_resource type="Resource" path="res://resources/supply_offers/calm_layer_pack.tres" id="5_calm"]
+[ext_resource type="Resource" path="res://resources/supply_offers/speed_fragment_offer.tres" id="6_speed"]
+[ext_resource type="Resource" path="res://resources/supply_offers/hype_layer_offer.tres" id="7_hype"]
+[ext_resource type="Resource" path="res://resources/supply_offers/luxury_fragment_offer.tres" id="8_luxury"]
+[ext_resource type="Resource" path="res://resources/supply_offers/premium_layer_offer.tres" id="9_premium"]
+
+[sub_resource type="StandardMaterial3D" id="Material_body"]
+albedo_color = Color(0.11, 0.16, 0.24, 1)
+metallic = 0.2
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+material = SubResource("Material_body")
+size = Vector3(1.15, 1.45, 0.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape_body"]
+size = Vector3(1.15, 1.45, 0.75)
+
+[sub_resource type="StandardMaterial3D" id="Material_screen"]
+albedo_color = Color(0.25, 0.65, 1, 1)
+emission_enabled = true
+emission = Color(0.08, 0.32, 0.8, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_screen"]
+material = SubResource("Material_screen")
+size = Vector3(0.78, 0.46, 0.06)
+
+[sub_resource type="StandardMaterial3D" id="Material_base"]
+albedo_color = Color(0.05, 0.07, 0.1, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_base"]
+material = SubResource("Material_base")
+size = Vector3(1.38, 0.18, 1)
+
+[node name="SupplyTerminal" type="StaticBody3D"]
+script = ExtResource("1_terminal")
+offers = Array[ExtResource("2_offer_type")]([ExtResource("3_blank"), ExtResource("4_beach"), ExtResource("5_calm"), ExtResource("6_speed"), ExtResource("7_hype"), ExtResource("8_luxury"), ExtResource("9_premium")])
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_body")
+
+[node name="Screen" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.28, 0.4)
+mesh = SubResource("BoxMesh_screen")
+
+[node name="Base" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.78, 0)
+mesh = SubResource("BoxMesh_base")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_body")
+
+[node name="Label3D" type="Label3D" parent="."]
+position = Vector3(0, 1.04, 0)
+text = "Supply Terminal"
+font_size = 38
+outline_size = 8
+billboard = 1
+no_depth_test = true

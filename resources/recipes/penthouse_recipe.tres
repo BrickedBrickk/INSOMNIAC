@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="EncoderRecipeData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/recipes/encoder_recipe_data.gd" id="1_recipe"]
+[ext_resource type="Resource" path="res://resources/items/penthouse.tres" id="2_output"]
+[ext_resource type="Script" path="res://scripts/inventory/item_amount_data.gd" id="3_amount"]
+
+[sub_resource type="Resource" id="Ingredient_blank"]
+script = ExtResource("3_amount")
+item_id = "blank_cartridge"
+display_name = "Blank Cartridge"
+amount = 1
+
+[sub_resource type="Resource" id="Ingredient_luxury"]
+script = ExtResource("3_amount")
+item_id = "luxury_fragment"
+display_name = "Luxury Fragment"
+amount = 1
+
+[sub_resource type="Resource" id="Ingredient_premium"]
+script = ExtResource("3_amount")
+item_id = "premium_layer"
+display_name = "Premium Layer"
+amount = 1
+
+[resource]
+script = ExtResource("1_recipe")
+id = "penthouse_recipe"
+display_name = "Penthouse"
+output_item = ExtResource("2_output")
+output_amount = 1
+ingredients = Array[ExtResource("3_amount")]([SubResource("Ingredient_blank"), SubResource("Ingredient_luxury"), SubResource("Ingredient_premium")])

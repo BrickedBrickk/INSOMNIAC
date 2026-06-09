@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BasicItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/items/basic_item_data.gd" id="1_basic"]
+
+[resource]
+script = ExtResource("1_basic")
+id = "hype_layer"
+display_name = "Hype Layer"

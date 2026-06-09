@@ -1,0 +1,114 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/PlayerDesktopRig.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/machines/DreamEncoder.tscn" id="2_encoder"]
+[ext_resource type="PackedScene" path="res://scenes/world/SellTerminal.tscn" id="3_sell"]
+[ext_resource type="PackedScene" path="res://scenes/world/StashBox.tscn" id="4_stash"]
+[ext_resource type="PackedScene" path="res://scenes/world/SupplyTerminal.tscn" id="5_supply"]
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.16, 0.17, 0.2, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+material = SubResource("Material_floor")
+size = Vector3(10, 0.2, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape_floor"]
+size = Vector3(10, 0.2, 10)
+
+[sub_resource type="StandardMaterial3D" id="Material_wall"]
+albedo_color = Color(0.28, 0.25, 0.32, 1)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall_z"]
+material = SubResource("Material_wall")
+size = Vector3(10, 2.8, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wall_z"]
+size = Vector3(10, 2.8, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall_x"]
+material = SubResource("Material_wall")
+size = Vector3(0.2, 2.8, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape_wall_x"]
+size = Vector3(0.2, 2.8, 10)
+
+[sub_resource type="Environment" id="Environment_apartment"]
+background_mode = 1
+background_color = Color(0.035, 0.025, 0.05, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.45, 0.4, 0.55, 1)
+ambient_light_energy = 0.55
+
+[node name="Apartment" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape_floor")
+
+[node name="BackWall" type="StaticBody3D" parent="."]
+position = Vector3(0, 1.4, -5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BackWall"]
+mesh = SubResource("BoxMesh_wall_z")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BackWall"]
+shape = SubResource("BoxShape_wall_z")
+
+[node name="FrontWall" type="StaticBody3D" parent="."]
+position = Vector3(0, 1.4, 5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FrontWall"]
+mesh = SubResource("BoxMesh_wall_z")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FrontWall"]
+shape = SubResource("BoxShape_wall_z")
+
+[node name="LeftWall" type="StaticBody3D" parent="."]
+position = Vector3(-5, 1.4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftWall"]
+mesh = SubResource("BoxMesh_wall_x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftWall"]
+shape = SubResource("BoxShape_wall_x")
+
+[node name="RightWall" type="StaticBody3D" parent="."]
+position = Vector3(5, 1.4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightWall"]
+mesh = SubResource("BoxMesh_wall_x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightWall"]
+shape = SubResource("BoxShape_wall_x")
+
+[node name="PlayerDesktopRig" parent="." instance=ExtResource("1_player")]
+position = Vector3(0, 0.9, 2.5)
+
+[node name="DreamEncoder" parent="." instance=ExtResource("2_encoder")]
+position = Vector3(0, 0.8, -1.5)
+
+[node name="SellTerminal" parent="." instance=ExtResource("3_sell")]
+position = Vector3(2.2, 0.8, -1.5)
+
+[node name="StashBox" parent="." instance=ExtResource("4_stash")]
+position = Vector3(-2.2, 0.6, -1.5)
+
+[node name="SupplyTerminal" parent="." instance=ExtResource("5_supply")]
+position = Vector3(3.75, 0.8, -1.5)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-55, -25, 0)
+light_color = Color(0.75, 0.8, 1, 1)
+light_energy = 0.8
+shadow_enabled = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_apartment")

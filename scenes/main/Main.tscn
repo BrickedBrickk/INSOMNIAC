@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/core/game.gd" id="1_game"]
+[ext_resource type="PackedScene" path="res://scenes/apartment/Apartment.tscn" id="2_apartment"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="3_hud"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_game")
+
+[node name="Apartment" parent="." instance=ExtResource("2_apartment")]
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]

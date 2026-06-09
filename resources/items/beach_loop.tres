@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LucidItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/items/lucid_item_data.gd" id="1_lucid"]
+
+[resource]
+script = ExtResource("1_lucid")
+id = "beach_loop"
+display_name = "Beach Loop"
+clarity = 20
+intensity = 10
+stability = 80
+duration = 30
+heat = 5
+value = 25
+corruption = 2

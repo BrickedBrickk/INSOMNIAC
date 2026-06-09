@@ -1,0 +1,38 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/machines/dream_encoder.gd" id="1_encoder"]
+[ext_resource type="Script" path="res://scripts/recipes/encoder_recipe_data.gd" id="2_recipe_type"]
+[ext_resource type="Resource" path="res://resources/recipes/beach_loop_recipe.tres" id="3_beach"]
+[ext_resource type="Resource" path="res://resources/recipes/fast_life_recipe.tres" id="4_fast"]
+[ext_resource type="Resource" path="res://resources/recipes/penthouse_recipe.tres" id="5_penthouse"]
+
+[sub_resource type="StandardMaterial3D" id="Material_encoder"]
+albedo_color = Color(0.18, 0.12, 0.3, 1)
+metallic = 0.2
+roughness = 0.65
+
+[sub_resource type="BoxMesh" id="BoxMesh_encoder"]
+material = SubResource("Material_encoder")
+size = Vector3(1.5, 1.6, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape_encoder"]
+size = Vector3(1.5, 1.6, 1)
+
+[node name="DreamEncoder" type="StaticBody3D"]
+script = ExtResource("1_encoder")
+prompt_name = "Dream Encoder"
+recipes = Array[ExtResource("2_recipe_type")]([ExtResource("3_beach"), ExtResource("4_fast"), ExtResource("5_penthouse")])
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_encoder")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_encoder")
+
+[node name="Label3D" type="Label3D" parent="."]
+position = Vector3(0, 1.2, 0)
+text = "Dream Encoder"
+font_size = 48
+outline_size = 8
+billboard = 1
+no_depth_test = true

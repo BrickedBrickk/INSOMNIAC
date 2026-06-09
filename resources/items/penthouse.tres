@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LucidItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/items/lucid_item_data.gd" id="1_lucid"]
+
+[resource]
+script = ExtResource("1_lucid")
+id = "penthouse"
+display_name = "Penthouse"
+clarity = 50
+intensity = 35
+stability = 65
+duration = 35
+heat = 12
+value = 90
+corruption = 8

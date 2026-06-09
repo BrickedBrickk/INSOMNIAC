@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LucidItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/items/lucid_item_data.gd" id="1_lucid"]
+
+[resource]
+script = ExtResource("1_lucid")
+id = "fast_life"
+display_name = "Fast Life"
+clarity = 35
+intensity = 55
+stability = 55
+duration = 20
+heat = 18
+value = 65
+corruption = 12
