@@ -10,8 +10,11 @@ extends CharacterBody3D
 @onready var look_controller: LookController = $CameraPivot
 @onready var interaction_controller: InteractionController = $CameraPivot/Camera3D/RayCast3D
 
+var player_stats: PlayerStats
+
 
 func _ready() -> void:
+	_ensure_player_stats()
 	add_to_group("player")
 
 
@@ -43,6 +46,11 @@ func get_wallet() -> Wallet:
 	return wallet
 
 
+func get_player_stats() -> PlayerStats:
+	_ensure_player_stats()
+	return player_stats
+
+
 func get_interaction_controller() -> InteractionController:
 	return interaction_controller
 
@@ -54,3 +62,14 @@ func get_look_controller() -> LookController:
 func _try_jump() -> void:
 	if is_on_floor():
 		velocity.y = jump_velocity
+
+
+func _ensure_player_stats() -> void:
+	if player_stats != null:
+		return
+
+	player_stats = get_node_or_null("PlayerStats") as PlayerStats
+	if player_stats == null:
+		player_stats = PlayerStats.new()
+		player_stats.name = "PlayerStats"
+		add_child(player_stats)

@@ -20,6 +20,30 @@ theme_override_font_sizes/font_size = 20
 text = "Money: $0"
 horizontal_alignment = 2
 
+[node name="ReputationLabel" type="Label" parent="."]
+offset_left = 970.0
+offset_top = 375.0
+offset_right = 1256.0
+offset_bottom = 405.0
+theme_override_colors/font_color = Color(0.58, 1, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.08, 0.04, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 18
+text = "Reputation: 0"
+horizontal_alignment = 2
+
+[node name="HeatLabel" type="Label" parent="."]
+offset_left = 970.0
+offset_top = 405.0
+offset_right = 1256.0
+offset_bottom = 435.0
+theme_override_colors/font_color = Color(1, 0.76, 0.48, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.02, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 18
+text = "Heat: 0% - Quiet"
+horizontal_alignment = 2
+
 [node name="InteractionPrompt" type="Label" parent="."]
 offset_left = 440.0
 offset_top = 385.0

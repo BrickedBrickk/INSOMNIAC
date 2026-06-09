@@ -4,6 +4,8 @@ extends RefCounted
 const SAVE_VERSION: int = 1
 const SAVE_FILE_NAME: String = "save_slot_1.json"
 const SAVE_PATH: String = "user://save_slot_1.json"
+const MAX_REPUTATION: int = 999999
+const MAX_HEAT: int = 100
 
 
 func save_game(root_or_game_node) -> bool:
@@ -102,6 +104,7 @@ func build_save_data(root_or_game_node) -> Dictionary:
 	var player := _find_player(root)
 	var inventory := _find_inventory(root, player)
 	var wallet := _find_wallet(root, player)
+	var player_stats := _find_player_stats(root, player)
 	if wallet != null:
 		data["wallet"] = {"money": wallet.call("get_money")}
 	else:
@@ -110,6 +113,11 @@ func build_save_data(root_or_game_node) -> Dictionary:
 		data["inventory"] = inventory.call("get_all_items")
 	else:
 		push_warning("SaveManager: inventory was not found while building save data.")
+	if player_stats != null:
+		data["player_stats"] = {
+			"reputation": _clamp_saved_int(player_stats.call("get_reputation"), 0, MAX_REPUTATION),
+			"heat": _clamp_saved_int(player_stats.call("get_heat"), 0, MAX_HEAT),
+		}
 
 	var stash_data: Array[Dictionary] = []
 	for stash_box: Node in _find_nodes(root, "stash_boxes", ["get_contents_for_save", "load_contents_from_save"]):
@@ -189,12 +197,30 @@ func apply_save_data(root_or_game_node, data: Dictionary) -> bool:
 
 	wallet.call("set_money", maxi(int(money), 0))
 	var applied_cleanly := bool(inventory.call("set_items_from_save", inventory_data))
+	applied_cleanly = _apply_player_stats_data(root, player, data) and applied_cleanly
 	applied_cleanly = _apply_stash_data(root, data) and applied_cleanly
 	applied_cleanly = _apply_encoder_data(root, data) and applied_cleanly
 	applied_cleanly = _apply_supply_data(root, data) and applied_cleanly
 	applied_cleanly = _apply_customer_order_data(root, data) and applied_cleanly
 	applied_cleanly = _apply_player_position(player, data) and applied_cleanly
 	return applied_cleanly
+
+
+func _apply_player_stats_data(root: Node, player: Node, data: Dictionary) -> bool:
+	var player_stats := _find_player_stats(root, player)
+	if player_stats == null or not data.has("player_stats"):
+		return true
+
+	var player_stats_data: Variant = data.get("player_stats", {})
+	if typeof(player_stats_data) != TYPE_DICTIONARY:
+		push_warning("SaveManager: player_stats must be an object. Loading safe defaults.")
+		player_stats_data = {}
+
+	var reputation := _clamp_saved_int(player_stats_data.get("reputation", 0), 0, MAX_REPUTATION)
+	var heat := _clamp_saved_int(player_stats_data.get("heat", 0), 0, MAX_HEAT)
+	player_stats.call("set_reputation", reputation)
+	player_stats.call("set_heat", heat)
+	return true
 
 
 func _apply_stash_data(root: Node, data: Dictionary) -> bool:
@@ -365,6 +391,22 @@ func _find_wallet(root: Node, player: Node) -> Node:
 	return wallets[0] if not wallets.is_empty() else null
 
 
+func _find_player_stats(root: Node, player: Node) -> Node:
+	if player != null and player.has_method("get_player_stats"):
+		var player_stats: Variant = player.call("get_player_stats")
+		if player_stats is Node and _has_methods(
+			player_stats,
+			["get_reputation", "set_reputation", "get_heat", "set_heat"]
+		):
+			return player_stats
+	var player_stats_nodes := _find_nodes(
+		root,
+		"",
+		["get_reputation", "set_reputation", "get_heat", "set_heat"]
+	)
+	return player_stats_nodes[0] if not player_stats_nodes.is_empty() else null
+
+
 func _find_nodes(root: Node, group_name: StringName, required_methods: Array) -> Array[Node]:
 	var matches: Array[Node] = []
 	if not group_name.is_empty() and root.get_tree() != null:
@@ -405,3 +447,9 @@ func _resolve_root(root_or_game_node) -> Node:
 
 func _is_number(value: Variant) -> bool:
 	return typeof(value) == TYPE_INT or typeof(value) == TYPE_FLOAT
+
+
+func _clamp_saved_int(value: Variant, minimum: int, maximum: int) -> int:
+	if not _is_number(value):
+		return minimum
+	return clampi(int(value), minimum, maximum)

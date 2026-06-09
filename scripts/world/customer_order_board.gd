@@ -21,14 +21,20 @@ func interact(player: Node) -> void:
 	if completed_orders.has(order.id):
 		_notify("%s is already completed" % order.order_title)
 		return
-	if player == null or not player.has_method("get_inventory") or not player.has_method("get_wallet"):
-		push_warning("CustomerOrderBoard requires a player with inventory and wallet access.")
+	if (
+		player == null
+		or not player.has_method("get_inventory")
+		or not player.has_method("get_wallet")
+		or not player.has_method("get_player_stats")
+	):
+		push_warning("CustomerOrderBoard requires a player with inventory, wallet, and PlayerStats access.")
 		return
 
 	var inventory := player.call("get_inventory") as Inventory
 	var wallet := player.call("get_wallet") as Wallet
-	if inventory == null or wallet == null:
-		push_warning("CustomerOrderBoard could not access the player's inventory or wallet.")
+	var player_stats := player.call("get_player_stats") as PlayerStats
+	if inventory == null or wallet == null or player_stats == null:
+		push_warning("CustomerOrderBoard could not access the player's inventory, wallet, or PlayerStats.")
 		return
 
 	var owned_amount := inventory.get_amount(order.requested_item_id)
@@ -46,7 +52,8 @@ func interact(player: Node) -> void:
 	var reward := order.get_reward()
 	completed_orders[order.id] = true
 	wallet.add_money(reward.money)
-	print("Customer Order Board: reputation +%d, heat +%d" % [reward.reputation, reward.heat])
+	player_stats.add_reputation(reward.reputation)
+	player_stats.add_heat(reward.heat)
 	_notify("Fulfilled %s for $%d" % [order.order_title, reward.money])
 	_advance_order()
 
