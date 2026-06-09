@@ -143,6 +143,17 @@ func build_save_data(root_or_game_node) -> Dictionary:
 		})
 	data["supply_terminals"] = supply_data
 
+	var customer_order_data: Array[Dictionary] = []
+	for board: Node in _find_nodes(
+		root,
+		"customer_order_boards",
+		["get_order_state_for_save", "load_order_state_from_save"]
+	):
+		var order_state: Dictionary = board.call("get_order_state_for_save")
+		order_state["node_path"] = str(root.get_path_to(board))
+		customer_order_data.append(order_state)
+	data["customer_order_boards"] = customer_order_data
+
 	if player is Node3D:
 		var position: Vector3 = player.global_position
 		data["player_position"] = {"x": position.x, "y": position.y, "z": position.z}
@@ -181,6 +192,7 @@ func apply_save_data(root_or_game_node, data: Dictionary) -> bool:
 	applied_cleanly = _apply_stash_data(root, data) and applied_cleanly
 	applied_cleanly = _apply_encoder_data(root, data) and applied_cleanly
 	applied_cleanly = _apply_supply_data(root, data) and applied_cleanly
+	applied_cleanly = _apply_customer_order_data(root, data) and applied_cleanly
 	applied_cleanly = _apply_player_position(player, data) and applied_cleanly
 	return applied_cleanly
 
@@ -256,6 +268,33 @@ func _apply_supply_data(root: Node, data: Dictionary) -> bool:
 			applied_cleanly = false
 			continue
 		nodes[index].call("set_selected_offer_index", int(selected_index))
+	return applied_cleanly
+
+
+func _apply_customer_order_data(root: Node, data: Dictionary) -> bool:
+	if not data.has("customer_order_boards"):
+		return true
+	var entries: Variant = data["customer_order_boards"]
+	if typeof(entries) != TYPE_ARRAY:
+		push_warning("SaveManager: customer_order_boards must be an array.")
+		return false
+
+	var applied_cleanly := true
+	var nodes := _find_nodes(
+		root,
+		"customer_order_boards",
+		["get_order_state_for_save", "load_order_state_from_save"]
+	)
+	for index: int in nodes.size():
+		var entry := _find_entry(entries, root, nodes[index], index)
+		if entry.is_empty():
+			continue
+		var selected_index: Variant = entry.get("selected_order_index")
+		var completed_orders: Variant = entry.get("completed_orders")
+		if not _is_number(selected_index) or typeof(completed_orders) != TYPE_ARRAY:
+			applied_cleanly = false
+			continue
+		nodes[index].call("load_order_state_from_save", entry)
 	return applied_cleanly
 
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/PlayerDesktopRig.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/machines/DreamEncoder.tscn" id="2_encoder"]
 [ext_resource type="PackedScene" path="res://scenes/world/SellTerminal.tscn" id="3_sell"]
 [ext_resource type="PackedScene" path="res://scenes/world/StashBox.tscn" id="4_stash"]
 [ext_resource type="PackedScene" path="res://scenes/world/SupplyTerminal.tscn" id="5_supply"]
+[ext_resource type="PackedScene" path="res://scenes/world/CustomerOrderBoard.tscn" id="6_orders"]
 
 [sub_resource type="StandardMaterial3D" id="Material_floor"]
 albedo_color = Color(0.16, 0.17, 0.2, 1)
@@ -103,6 +104,9 @@ position = Vector3(-2.2, 0.6, -1.5)
 
 [node name="SupplyTerminal" parent="." instance=ExtResource("5_supply")]
 position = Vector3(3.75, 0.8, -1.5)
+
+[node name="CustomerOrderBoard" parent="." instance=ExtResource("6_orders")]
+position = Vector3(-3.75, 1.46, -1.5)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 rotation_degrees = Vector3(-55, -25, 0)
