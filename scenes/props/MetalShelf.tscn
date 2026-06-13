@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Material" path="res://materials/rusted_metal.tres" id="1_metal"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_post"]
+material = ExtResource("1_metal")
+size = Vector3(0.1, 2.55, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_shelf"]
+material = ExtResource("1_metal")
+size = Vector3(1.65, 0.09, 0.72)
+
+[node name="MetalShelf" type="Node3D"]
+
+[node name="PostFrontLeft" type="MeshInstance3D" parent="."]
+position = Vector3(-0.76, 1.28, 0.3)
+mesh = SubResource("BoxMesh_post")
+
+[node name="PostFrontRight" type="MeshInstance3D" parent="."]
+position = Vector3(0.76, 1.28, 0.3)
+mesh = SubResource("BoxMesh_post")
+
+[node name="PostBackLeft" type="MeshInstance3D" parent="."]
+position = Vector3(-0.76, 1.28, -0.3)
+mesh = SubResource("BoxMesh_post")
+
+[node name="PostBackRight" type="MeshInstance3D" parent="."]
+position = Vector3(0.76, 1.28, -0.3)
+mesh = SubResource("BoxMesh_post")
+
+[node name="ShelfBottom" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.12, 0)
+mesh = SubResource("BoxMesh_shelf")
+
+[node name="ShelfMiddle" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.92, 0)
+mesh = SubResource("BoxMesh_shelf")
+
+[node name="ShelfUpper" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.72, 0)
+mesh = SubResource("BoxMesh_shelf")
+
+[node name="ShelfTop" type="MeshInstance3D" parent="."]
+position = Vector3(0, 2.5, 0)
+mesh = SubResource("BoxMesh_shelf")

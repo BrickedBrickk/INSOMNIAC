@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CustomerOrderData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/orders/customer_order_data.gd" id="1_order"]
+
+[resource]
+script = ExtResource("1_order")
+id = "late_shift"
+customer_name = "Rowan"
+order_title = "Late Shift"
+requested_item_id = "beach_loop"
+requested_item_display_name = "Beach Loop"
+requested_amount = 2
+payout = 85
+reputation_gain = 3
+heat_gain = 2
+flavor_text = "Two clean loops. No glitches."

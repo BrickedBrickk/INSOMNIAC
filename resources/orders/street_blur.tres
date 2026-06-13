@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CustomerOrderData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/orders/customer_order_data.gd" id="1_order"]
+
+[resource]
+script = ExtResource("1_order")
+id = "street_blur"
+customer_name = "Kade"
+order_title = "Street Blur"
+requested_item_id = "fast_life"
+requested_item_display_name = "Fast Life"
+requested_amount = 1
+payout = 95
+reputation_gain = 3
+heat_gain = 5
+flavor_text = "Fast one. Strong one."

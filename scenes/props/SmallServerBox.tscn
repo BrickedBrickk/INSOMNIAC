@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Material" path="res://materials/server_case.tres" id="1_case"]
+[ext_resource type="Material" path="res://materials/server_led.tres" id="2_led"]
+[ext_resource type="Material" path="res://materials/plastic_dark.tres" id="3_dark"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+material = ExtResource("1_case")
+size = Vector3(0.78, 0.96, 0.72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_panel"]
+material = ExtResource("3_dark")
+size = Vector3(0.6, 0.72, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_led"]
+material = ExtResource("2_led")
+size = Vector3(0.08, 0.08, 0.045)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vent"]
+material = ExtResource("3_dark")
+size = Vector3(0.34, 0.045, 0.05)
+
+[node name="SmallServerBox" type="Node3D"]
+
+[node name="Body" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.48, 0)
+mesh = SubResource("BoxMesh_body")
+
+[node name="FrontPanel" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.48, 0.38)
+mesh = SubResource("BoxMesh_panel")
+
+[node name="LedA" type="MeshInstance3D" parent="."]
+position = Vector3(-0.2, 0.72, 0.41)
+mesh = SubResource("BoxMesh_led")
+
+[node name="LedB" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.72, 0.41)
+mesh = SubResource("BoxMesh_led")
+
+[node name="LedC" type="MeshInstance3D" parent="."]
+position = Vector3(0.2, 0.72, 0.41)
+mesh = SubResource("BoxMesh_led")
+
+[node name="VentA" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.42, 0.41)
+mesh = SubResource("BoxMesh_vent")
+
+[node name="VentB" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.3, 0.41)
+mesh = SubResource("BoxMesh_vent")

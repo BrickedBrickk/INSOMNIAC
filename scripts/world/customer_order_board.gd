@@ -3,6 +3,8 @@ extends StaticBody3D
 
 signal status_changed(message: String)
 
+const REFRESH_COST: int = 50
+
 @export var orders: Array[CustomerOrderData] = []
 @export var selected_order_index: int = 0
 
@@ -69,6 +71,27 @@ func secondary_interact(_player: Node) -> void:
 		_notify("Selected %s" % order.order_title)
 
 
+func refresh_orders(player: Node) -> bool:
+	if completed_orders.is_empty():
+		_notify("No completed orders to refresh.")
+		return false
+	if player == null or not player.has_method("get_wallet"):
+		push_warning("CustomerOrderBoard requires a player with wallet access to refresh orders.")
+		return false
+
+	var wallet := player.call("get_wallet") as Wallet
+	if wallet == null:
+		push_warning("CustomerOrderBoard could not access the player's wallet to refresh orders.")
+		return false
+	if not wallet.spend_money(REFRESH_COST):
+		_notify("Not enough money to refresh orders.")
+		return false
+
+	completed_orders.clear()
+	_notify("Orders refreshed.")
+	return true
+
+
 func get_selected_order() -> CustomerOrderData:
 	if orders.is_empty():
 		return null
@@ -133,7 +156,7 @@ func get_interaction_panel_data(player: Node) -> Dictionary:
 	if order == null:
 		return {
 			"machine_name": "Customer Orders",
-			"sections": [],
+			"sections": [_get_refresh_panel_section()],
 			"status_text": "No orders available",
 			"controls_text": "E = Fulfill Order\nR = Switch Order",
 		}
@@ -180,6 +203,7 @@ func get_interaction_panel_data(player: Node) -> Dictionary:
 				"title": "Message:",
 				"lines": [order.flavor_text],
 			},
+			_get_refresh_panel_section(),
 		],
 		"status_text": (
 			"COMPLETED"
@@ -187,6 +211,16 @@ func get_interaction_panel_data(player: Node) -> Dictionary:
 			else "Ready to fulfill" if can_fulfill else "Missing requested Lucid"
 		),
 		"controls_text": "E = Fulfill Order\nR = Switch Order",
+	}
+
+
+func _get_refresh_panel_section() -> Dictionary:
+	return {
+		"title": "Refresh:",
+		"lines": [
+			"F = Refresh Orders ($%d)" % REFRESH_COST,
+			"Refresh available." if not completed_orders.is_empty() else "No completed orders to refresh.",
+		],
 	}
 
 

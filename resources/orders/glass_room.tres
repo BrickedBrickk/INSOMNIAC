@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CustomerOrderData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/orders/customer_order_data.gd" id="1_order"]
+
+[resource]
+script = ExtResource("1_order")
+id = "glass_room"
+customer_name = "June"
+order_title = "Glass Room"
+requested_item_id = "penthouse"
+requested_item_display_name = "Penthouse"
+requested_amount = 1
+payout = 140
+reputation_gain = 5
+heat_gain = 4
+flavor_text = "Premium only. Client notices everything."

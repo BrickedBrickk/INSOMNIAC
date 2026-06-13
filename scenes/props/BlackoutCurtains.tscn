@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Material" path="res://materials/blackout_cloth.tres" id="1_cloth"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pleat"]
+material = ExtResource("1_cloth")
+size = Vector3(0.38, 2.7, 0.14)
+
+[node name="BlackoutCurtains" type="Node3D"]
+
+[node name="Pleat1" type="MeshInstance3D" parent="."]
+position = Vector3(-1.08, 1.35, 0)
+rotation_degrees = Vector3(0, -8, 0)
+mesh = SubResource("BoxMesh_pleat")
+
+[node name="Pleat2" type="MeshInstance3D" parent="."]
+position = Vector3(-0.72, 1.35, 0.04)
+rotation_degrees = Vector3(0, 6, 0)
+mesh = SubResource("BoxMesh_pleat")
+
+[node name="Pleat3" type="MeshInstance3D" parent="."]
+position = Vector3(-0.36, 1.35, 0)
+rotation_degrees = Vector3(0, -5, 0)
+mesh = SubResource("BoxMesh_pleat")
+
+[node name="Pleat4" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.35, 0.05)
+rotation_degrees = Vector3(0, 7, 0)
+mesh = SubResource("BoxMesh_pleat")
+
+[node name="Pleat5" type="MeshInstance3D" parent="."]
+position = Vector3(0.36, 1.35, 0)
+rotation_degrees = Vector3(0, -7, 0)
+mesh = SubResource("BoxMesh_pleat")
+
+[node name="Pleat6" type="MeshInstance3D" parent="."]
+position = Vector3(0.72, 1.35, 0.04)
+rotation_degrees = Vector3(0, 5, 0)
+mesh = SubResource("BoxMesh_pleat")
+
+[node name="Pleat7" type="MeshInstance3D" parent="."]
+position = Vector3(1.08, 1.35, 0)
+rotation_degrees = Vector3(0, -6, 0)
+mesh = SubResource("BoxMesh_pleat")

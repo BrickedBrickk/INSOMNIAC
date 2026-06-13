@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Material" path="res://materials/dirty_fabric.tres" id="1_fabric"]
+[ext_resource type="Material" path="res://materials/stained_fabric.tres" id="2_stain"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mattress"]
+material = ExtResource("1_fabric")
+size = Vector3(2.25, 0.22, 3.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_blanket"]
+material = ExtResource("2_stain")
+size = Vector3(2.12, 0.07, 2.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pillow"]
+material = ExtResource("1_fabric")
+size = Vector3(0.78, 0.2, 0.48)
+
+[sub_resource type="BoxMesh" id="BoxMesh_stain"]
+material = ExtResource("2_stain")
+size = Vector3(0.72, 0.025, 0.58)
+
+[node name="DirtyMattress" type="Node3D"]
+
+[node name="Mattress" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.13, 0)
+mesh = SubResource("BoxMesh_mattress")
+
+[node name="Blanket" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.275, 0.42)
+mesh = SubResource("BoxMesh_blanket")
+
+[node name="Pillow" type="MeshInstance3D" parent="."]
+position = Vector3(-0.55, 0.34, -1.15)
+rotation_degrees = Vector3(0, -8, 0)
+mesh = SubResource("BoxMesh_pillow")
+
+[node name="Stain" type="MeshInstance3D" parent="."]
+position = Vector3(0.48, 0.32, -0.35)
+rotation_degrees = Vector3(0, 18, 0)
+mesh = SubResource("BoxMesh_stain")

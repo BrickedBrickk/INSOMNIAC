@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CustomerOrderData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/orders/customer_order_data.gd" id="1_order"]
+
+[resource]
+script = ExtResource("1_order")
+id = "private_floor"
+customer_name = "Vale"
+order_title = "Private Floor"
+requested_item_id = "penthouse"
+requested_item_display_name = "Penthouse"
+requested_amount = 2
+payout = 260
+reputation_gain = 8
+heat_gain = 7
+flavor_text = "Two rich-life cuts. Quiet delivery."

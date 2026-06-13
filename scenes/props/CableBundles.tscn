@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Material" path="res://materials/plastic_dark.tres" id="1_cable"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cable"]
+material = ExtResource("1_cable")
+top_radius = 0.025
+bottom_radius = 0.025
+height = 1.45
+radial_segments = 6
+rings = 1
+
+[node name="CableBundles" type="Node3D"]
+
+[node name="CableA" type="MeshInstance3D" parent="."]
+position = Vector3(-0.48, 0.035, 0)
+rotation_degrees = Vector3(90, 20, 0)
+mesh = SubResource("CylinderMesh_cable")
+
+[node name="CableB" type="MeshInstance3D" parent="."]
+position = Vector3(-0.2, 0.045, 0.12)
+rotation_degrees = Vector3(90, 35, 0)
+mesh = SubResource("CylinderMesh_cable")
+
+[node name="CableC" type="MeshInstance3D" parent="."]
+position = Vector3(0.08, 0.035, 0.05)
+rotation_degrees = Vector3(90, 51, 0)
+mesh = SubResource("CylinderMesh_cable")
+
+[node name="CableD" type="MeshInstance3D" parent="."]
+position = Vector3(0.34, 0.04, -0.08)
+rotation_degrees = Vector3(90, 65, 0)
+mesh = SubResource("CylinderMesh_cable")
+
+[node name="CableE" type="MeshInstance3D" parent="."]
+position = Vector3(0.52, 0.035, -0.22)
+rotation_degrees = Vector3(90, 77, 0)
+mesh = SubResource("CylinderMesh_cable")

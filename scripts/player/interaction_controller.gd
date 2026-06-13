@@ -4,6 +4,8 @@ extends RayCast3D
 signal prompt_changed(prompt: String)
 signal panel_data_changed(panel_data: Dictionary)
 
+const REFRESH_ORDERS: StringName = &"refresh_orders"
+
 @export var player_path: NodePath = ^"../../.."
 
 var _current_target: Object
@@ -24,6 +26,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		method_name = "interact"
 	elif event.is_action_pressed(InputActions.CYCLE_RECIPE):
 		method_name = "secondary_interact"
+	elif event.is_action_pressed(REFRESH_ORDERS):
+		method_name = "refresh_orders"
 	else:
 		return
 

@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Material" path="res://materials/plastic_dark.tres" id="1_shell"]
+[ext_resource type="Material" path="res://materials/cartridge_glow.tres" id="2_glow"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_shell"]
+material = ExtResource("1_shell")
+top_radius = 0.085
+bottom_radius = 0.085
+height = 0.36
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_glow"]
+material = ExtResource("2_glow")
+top_radius = 0.092
+bottom_radius = 0.092
+height = 0.09
+radial_segments = 8
+rings = 1
+
+[node name="LooseCartridges" type="Node3D"]
+
+[node name="CartridgeA" type="MeshInstance3D" parent="."]
+position = Vector3(-0.38, 0.1, 0.08)
+rotation_degrees = Vector3(0, 22, 90)
+mesh = SubResource("CylinderMesh_shell")
+
+[node name="GlowA" type="MeshInstance3D" parent="."]
+position = Vector3(-0.22, 0.1, 0.015)
+rotation_degrees = Vector3(0, 22, 90)
+mesh = SubResource("CylinderMesh_glow")
+
+[node name="CartridgeB" type="MeshInstance3D" parent="."]
+position = Vector3(0.08, 0.1, -0.12)
+rotation_degrees = Vector3(0, -18, 90)
+mesh = SubResource("CylinderMesh_shell")
+
+[node name="GlowB" type="MeshInstance3D" parent="."]
+position = Vector3(0.235, 0.1, -0.07)
+rotation_degrees = Vector3(0, -18, 90)
+mesh = SubResource("CylinderMesh_glow")
+
+[node name="CartridgeC" type="MeshInstance3D" parent="."]
+position = Vector3(0.42, 0.1, 0.22)
+rotation_degrees = Vector3(0, 48, 90)
+mesh = SubResource("CylinderMesh_shell")
+
+[node name="GlowC" type="MeshInstance3D" parent="."]
+position = Vector3(0.31, 0.1, 0.1)
+rotation_degrees = Vector3(0, 48, 90)
+mesh = SubResource("CylinderMesh_glow")
+
+[node name="CartridgeD" type="MeshInstance3D" parent="."]
+position = Vector3(-0.05, 0.1, 0.32)
+rotation_degrees = Vector3(0, 8, 90)
+mesh = SubResource("CylinderMesh_shell")
