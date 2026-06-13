@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=28 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/PlayerDesktopRig.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/machines/DreamEncoder.tscn" id="2_encoder"]
@@ -6,6 +6,18 @@
 [ext_resource type="PackedScene" path="res://scenes/world/StashBox.tscn" id="4_stash"]
 [ext_resource type="PackedScene" path="res://scenes/world/SupplyTerminal.tscn" id="5_supply"]
 [ext_resource type="PackedScene" path="res://scenes/world/CustomerOrderBoard.tscn" id="6_orders"]
+[ext_resource type="PackedScene" path="res://scenes/props/BlackoutCurtains.tscn" id="7_curtains"]
+[ext_resource type="PackedScene" path="res://scenes/props/CableBundles.tscn" id="8_cables"]
+[ext_resource type="PackedScene" path="res://scenes/props/CardboardBoxes.tscn" id="9_boxes"]
+[ext_resource type="PackedScene" path="res://scenes/props/CheapCeilingLight.tscn" id="10_ceiling_light"]
+[ext_resource type="PackedScene" path="res://scenes/props/DirtyMattress.tscn" id="11_mattress"]
+[ext_resource type="PackedScene" path="res://scenes/props/LooseCartridges.tscn" id="12_cartridges"]
+[ext_resource type="PackedScene" path="res://scenes/props/MetalShelf.tscn" id="13_shelf"]
+[ext_resource type="PackedScene" path="res://scenes/props/SmallServerBox.tscn" id="14_server"]
+[ext_resource type="PackedScene" path="res://scenes/props/StashCrateVisuals.tscn" id="15_stash_visuals"]
+[ext_resource type="PackedScene" path="res://scenes/props/TrashPile.tscn" id="16_trash"]
+[ext_resource type="PackedScene" path="res://scenes/props/WallPosters.tscn" id="17_posters"]
+[ext_resource type="PackedScene" path="res://scenes/props/WorkDesk.tscn" id="18_desk"]
 
 [sub_resource type="StandardMaterial3D" id="Material_floor"]
 albedo_color = Color(0.16, 0.17, 0.2, 1)
@@ -108,10 +120,148 @@ position = Vector3(3.75, 0.8, -1.5)
 [node name="CustomerOrderBoard" parent="." instance=ExtResource("6_orders")]
 position = Vector3(-3.75, 1.46, -1.5)
 
+[node name="ArtBlockout" type="Node3D" parent="."]
+
+[node name="SleepCorner" type="Node3D" parent="ArtBlockout"]
+
+[node name="DirtyMattress" parent="ArtBlockout/SleepCorner" instance=ExtResource("11_mattress")]
+position = Vector3(-3.55, 0, 2.85)
+rotation_degrees = Vector3(0, -4, 0)
+
+[node name="BedsideTrash" parent="ArtBlockout/SleepCorner" instance=ExtResource("16_trash")]
+position = Vector3(-4.15, 0, 0.95)
+rotation_degrees = Vector3(0, 18, 0)
+scale = Vector3(0.82, 0.82, 0.82)
+
+[node name="BedsideCartridges" parent="ArtBlockout/SleepCorner" instance=ExtResource("12_cartridges")]
+position = Vector3(-2.35, 0, 3.9)
+rotation_degrees = Vector3(0, -28, 0)
+
+[node name="BedsideCables" parent="ArtBlockout/SleepCorner" instance=ExtResource("8_cables")]
+position = Vector3(-3.75, 0, 4.38)
+rotation_degrees = Vector3(0, 12, 0)
+
+[node name="EncoderLab" type="Node3D" parent="ArtBlockout"]
+
+[node name="WorkDesk" parent="ArtBlockout/EncoderLab" instance=ExtResource("18_desk")]
+position = Vector3(0, 0, -2.55)
+
+[node name="SmallServerBox" parent="ArtBlockout/EncoderLab" instance=ExtResource("14_server")]
+position = Vector3(-1.45, 0, -2.75)
+rotation_degrees = Vector3(0, 8, 0)
+
+[node name="EncoderCables" parent="ArtBlockout/EncoderLab" instance=ExtResource("8_cables")]
+position = Vector3(0.1, 0, -2.25)
+rotation_degrees = Vector3(0, -6, 0)
+
+[node name="DeskCartridges" parent="ArtBlockout/EncoderLab" instance=ExtResource("12_cartridges")]
+position = Vector3(0.9, 0.94, -2.48)
+rotation_degrees = Vector3(0, 19, 0)
+
+[node name="EncoderFloorCartridges" parent="ArtBlockout/EncoderLab" instance=ExtResource("12_cartridges")]
+position = Vector3(0.95, 0, -0.58)
+rotation_degrees = Vector3(0, -17, 0)
+
+[node name="StashAndOrders" type="Node3D" parent="ArtBlockout"]
+
+[node name="StashCrateVisuals" parent="ArtBlockout/StashAndOrders" instance=ExtResource("15_stash_visuals")]
+position = Vector3(-2.55, 0, -3.35)
+rotation_degrees = Vector3(0, -5, 0)
+
+[node name="OrderBoardBoxes" parent="ArtBlockout/StashAndOrders" instance=ExtResource("9_boxes")]
+position = Vector3(-4.05, 0, -3.65)
+rotation_degrees = Vector3(0, 9, 0)
+
+[node name="StashCables" parent="ArtBlockout/StashAndOrders" instance=ExtResource("8_cables")]
+position = Vector3(-2.2, 0, -2.35)
+rotation_degrees = Vector3(0, 14, 0)
+
+[node name="OrderBoardTrash" parent="ArtBlockout/StashAndOrders" instance=ExtResource("16_trash")]
+position = Vector3(-4.25, 0, -2.45)
+rotation_degrees = Vector3(0, -24, 0)
+scale = Vector3(0.75, 0.75, 0.75)
+
+[node name="StashCartridges" parent="ArtBlockout/StashAndOrders" instance=ExtResource("12_cartridges")]
+position = Vector3(-1.25, 0, -0.62)
+rotation_degrees = Vector3(0, 31, 0)
+
+[node name="TerminalClutter" type="Node3D" parent="ArtBlockout"]
+
+[node name="SellTerminalCables" parent="ArtBlockout/TerminalClutter" instance=ExtResource("8_cables")]
+position = Vector3(2.2, 0, -2.3)
+rotation_degrees = Vector3(0, -9, 0)
+
+[node name="SellTerminalCartridges" parent="ArtBlockout/TerminalClutter" instance=ExtResource("12_cartridges")]
+position = Vector3(1.55, 0, -0.6)
+rotation_degrees = Vector3(0, 11, 0)
+
+[node name="SupplyTerminalCables" parent="ArtBlockout/TerminalClutter" instance=ExtResource("8_cables")]
+position = Vector3(3.72, 0, -2.32)
+rotation_degrees = Vector3(0, 17, 0)
+
+[node name="SupplyTerminalCartridges" parent="ArtBlockout/TerminalClutter" instance=ExtResource("12_cartridges")]
+position = Vector3(3.15, 0, -0.62)
+rotation_degrees = Vector3(0, -22, 0)
+
+[node name="SupplyTerminalBoxes" parent="ArtBlockout/TerminalClutter" instance=ExtResource("9_boxes")]
+position = Vector3(4.05, 0, -3.75)
+rotation_degrees = Vector3(0, -12, 0)
+scale = Vector3(0.82, 0.82, 0.82)
+
+[node name="SupplyTerminalTrash" parent="ArtBlockout/TerminalClutter" instance=ExtResource("16_trash")]
+position = Vector3(4.28, 0, -2.65)
+rotation_degrees = Vector3(0, 16, 0)
+scale = Vector3(0.72, 0.72, 0.72)
+
+[node name="RightWallStorage" type="Node3D" parent="ArtBlockout"]
+
+[node name="MetalShelf" parent="ArtBlockout/RightWallStorage" instance=ExtResource("13_shelf")]
+position = Vector3(4.55, 0, 1.55)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="StorageBoxes" parent="ArtBlockout/RightWallStorage" instance=ExtResource("9_boxes")]
+position = Vector3(3.9, 0, 3.85)
+rotation_degrees = Vector3(0, -19, 0)
+scale = Vector3(0.9, 0.9, 0.9)
+
+[node name="StorageTrash" parent="ArtBlockout/RightWallStorage" instance=ExtResource("16_trash")]
+position = Vector3(4.22, 0, 2.85)
+rotation_degrees = Vector3(0, 27, 0)
+scale = Vector3(0.78, 0.78, 0.78)
+
+[node name="WallDressing" type="Node3D" parent="ArtBlockout"]
+
+[node name="BlackoutCurtainsLeft" parent="ArtBlockout/WallDressing" instance=ExtResource("7_curtains")]
+position = Vector3(-2.25, 0, 4.84)
+
+[node name="BlackoutCurtainsRight" parent="ArtBlockout/WallDressing" instance=ExtResource("7_curtains")]
+position = Vector3(2.25, 0, 4.84)
+
+[node name="BackWallPosters" parent="ArtBlockout/WallDressing" instance=ExtResource("17_posters")]
+position = Vector3(1.8, 1.68, -4.84)
+
+[node name="LeftWallPosters" parent="ArtBlockout/WallDressing" instance=ExtResource("17_posters")]
+position = Vector3(-4.84, 1.62, -0.15)
+rotation_degrees = Vector3(0, 90, 0)
+scale = Vector3(0.82, 0.82, 0.82)
+
+[node name="Lighting" type="Node3D" parent="ArtBlockout"]
+
+[node name="CheapCeilingLight" parent="ArtBlockout/Lighting" instance=ExtResource("10_ceiling_light")]
+position = Vector3(0, 2.7, 0.45)
+rotation_degrees = Vector3(0, -4, 2)
+
+[node name="WarmCeilingLight" type="OmniLight3D" parent="ArtBlockout/Lighting"]
+position = Vector3(0, 2.52, 0.45)
+light_color = Color(0.78, 0.7, 0.42, 1)
+light_energy = 1.7
+shadow_enabled = false
+omni_range = 7.0
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 rotation_degrees = Vector3(-55, -25, 0)
-light_color = Color(0.75, 0.8, 1, 1)
-light_energy = 0.8
+light_color = Color(0.48, 0.42, 0.62, 1)
+light_energy = 0.38
 shadow_enabled = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
